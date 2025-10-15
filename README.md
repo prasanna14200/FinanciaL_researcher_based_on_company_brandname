@@ -1,54 +1,92 @@
-# FinancialResearcher Crew
+# Financial Research CrewAI (Hugging Face API Version)
 
-Welcome to the FinancialResearcher Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+This project automates **financial research and reporting** using CrewAI with **Meta-LLaMA 3 via Hugging Face API**.
 
-## Installation
+---
 
-Ensure you have Python >=3.10 <3.14 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+## Quick Setup
 
-First, if you haven't already, install uv:
-
-```bash
-pip install uv
-```
-
-Next, navigate to your project directory and install the dependencies:
-
-(Optional) Lock the dependencies and install them by using the CLI command:
-```bash
-crewai install
-```
-### Customizing
-
-**Add your `OPENAI_API_KEY` into the `.env` file**
-
-- Modify `src/financial_researcher/config/agents.yaml` to define your agents
-- Modify `src/financial_researcher/config/tasks.yaml` to define your tasks
-- Modify `src/financial_researcher/crew.py` to add your own logic, tools and specific args
-- Modify `src/financial_researcher/main.py` to add custom inputs for your agents and tasks
-
-## Running the Project
-
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
+1. **Clone this repository**
 
 ```bash
-$ crewai run
-```
+git clone https://github.com/prasanna14200/FinanciaL_researcher_based_on_company_brandname.git
+cd financial_researcher
+Create a Python virtual environment
 
-This command initializes the financial_researcher Crew, assembling the agents and assigning them tasks as defined in your configuration.
+bash
+Copy code
+python -m venv .venv
+.venv\Scripts\activate  # Windows
+source .venv/bin/activate  # macOS/Linux
+Install dependencies
 
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
+bash
+Copy code
+pip install -r requirements.txt
+Create a Hugging Face account
 
-## Understanding Your Crew
+Visit Hugging Face and generate an API token from Settings → Access Tokens.
 
-The financial_researcher Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
+bash
+Copy code
+HF_API_KEY=your_new_api_key_here
+SERPER_API_KEY=your_serper_api_key  # optional, for web search
+Run the Crew
 
-## Support
+bash
+Copy code
+python src/financial_researcher/main.py
+The workflow automatically:
 
-For support, questions, or feedback regarding the FinancialResearcher Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+Researches the target company (research_task)
 
-Let's create wonders together with the power and simplicity of crewAI.
+Generates a professional report (analysis_task)
+
+Output report saved at: output/report.md, which includes:
+
+Executive summary
+
+Company overview
+
+Financial performance
+
+Challenges & opportunities
+
+Recent news & market outlook
+
+Notes
+
+Note: Free-tier Hugging Face API has monthly limits. Upgrade or monitor usage if you hit "You have exceeded your monthly included credits" errors. Optionally, use Serper API for real-time web research.
+
+
+Running the Project
+
+To start your crew of AI agents and execute tasks:
+
+crewai run
+
+
+This initializes the financial_researcher Crew, assembling the agents and assigning tasks as defined in your configuration. By default, it generates a report.md file in the root folder with a research output on LLMs.
+
+Understanding Your Crew
+
+The financial_researcher Crew is composed of multiple AI agents, each with unique roles, goals, and tools. Agents collaborate on tasks defined in config/tasks.yaml, leveraging their collective skills. Agent configurations are outlined in config/agents.yaml.
+
+Support
+
+For support, questions, or feedback:
+
+Documentation
+
+GitHub Repository
+
+Discord Community
+
+Chat with Docs
+
+Author: Prasanna
+Email: prasannaprasanna14200@gmail.com
+
+Date: 2025-10-15
+
+Let's create wonders together with the power and simplicity of CrewAI.
