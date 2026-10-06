@@ -1,14 +1,23 @@
 # src/research_crew/config/tasks.yaml
 research_task:
   description: >
-    Conduct thorough research on company {company}. Focus on:
+    Conduct thorough research on {company}, identified at {identity_url}.
+    Check that sources refer to this entity, not a similarly named company.
+    Use the Serper search tool for current evidence. Its search_query argument
+    must be a plain string. Search for official investor or regulatory filings,
+    then separately for recent news. Prefer official filings for financial
+    figures. Do not use Wikipedia or stock quote snippets for financial
+    statements. Focus on:
     1. Current company status and health
     2. Historical company performance
     3. Major challenges and opportunities
     4. Recent news and events
     5. Future outlook and potential developments
 
-    Make sure to organize your findings in a structured format with clear sections.
+    For every financial figure, include a direct source URL, fiscal or calendar period,
+    currency and units. Date news and market data. Do not call old results
+    current. State unavailable data as unavailable. Do not invent facts or
+    citations. Organize findings clearly.
   expected_output: >
     A comprehensive research document with well-organized sections covering
     all the requested aspects of {company}. Include specific facts, figures,
@@ -24,6 +33,10 @@ analysis_task:
     3. Provide insightful analysis of trends and patterns
     4. Offer a market outlook for company, noting that this should not be used for trading decisions
     5. Be formatted in a professional, easy-to-read style with clear headings
+    6. Separate "Reported facts" from "Agent analysis". Cite source URLs for
+       factual claims and figures. Label periods, currency and units. If the
+       research does not support a claim, say that data is unavailable.
+    7. Omit any figure that is not supported by a direct source in the research.
   expected_output: >
     A polished, professional report on {company} that presents the research
     findings with added analysis and insights. The report should be well-structured
@@ -31,4 +44,3 @@ analysis_task:
   agent: analyst
   context:
     - research_task
-  output_file: output/report.md
