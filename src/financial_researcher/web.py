@@ -33,11 +33,23 @@ PAGE = """<!doctype html><html lang="en"><meta charset="utf-8">
 
 
 def search_company(name):
-    key = os.environ.get("SERPER_API_KEY")
+    key = os.environ.get("SERPER_API_KEY", "").strip().strip('"\'')
     if not key:
         raise RuntimeError("SERPER_API_KEY is missing. Add it in Render Environment.")
+    if key.startswith("SERPER_API_KEY="):
+        raise RuntimeError("The SERPER_API_KEY value must be the key alone, without SERPER_API_KEY=.")
+    # CrewAI's Serper tool reads this same variable later in the job.
+    os.environ["SERPER_API_KEY"] = key
     response = requests.post("https://google.serper.dev/search", headers={"X-API-KEY": key},
                              json={"q": f"{name} brand or company official website", "num": 8}, timeout=20)
+    if response.status_code in (401, 403):
+        raise RuntimeError(
+            f"Serper rejected the search (HTTP {response.status_code}). In Render Environment, "
+            "set SERPER_API_KEY to the raw active key from serper.dev (no name, quotes, or spaces), "
+            "check that the account has search credits, then save and redeploy. No research was started."
+        )
+    if response.status_code == 429:
+        raise RuntimeError("Serper rate limit reached (HTTP 429). Wait and try again or check the account limit.")
     response.raise_for_status()
     found = []
     for item in response.json().get("organic", []):
